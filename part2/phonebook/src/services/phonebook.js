@@ -1,0 +1,24 @@
+import axios from "axios";
+const baseUrl = "http://localhost:3001/persons";
+
+const createPhonebook = (phonebook) => {
+  return axios.post(baseUrl, phonebook).then((response) => response.data);
+};
+const getPhonebooks = () => {
+  return axios.get(baseUrl).then((response) => response.data);
+};
+const deletePhonebook = (id) => {
+  return axios.delete(`${baseUrl}/${id}`).then((response) => response.data);
+};
+const updatePhonebook = (id, phonebook) => {
+  return axios
+    .put(`${baseUrl}/${id}`, phonebook)
+    .then((response) => response.data);
+};
+
+export default {
+  createPhonebook,
+  getPhonebooks,
+  deletePhonebook,
+  updatePhonebook,
+};
