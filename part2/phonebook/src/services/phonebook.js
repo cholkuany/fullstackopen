@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = "http://localhost:3001/persons";
+const baseUrl = "/api/persons";
 
 const createPhonebook = (phonebook) => {
   return axios.post(baseUrl, phonebook).then((response) => response.data);
