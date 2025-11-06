@@ -2,6 +2,15 @@ POST http://localhost:3001/api/persons HTTP/1.1
 Content-Type: application/json
 
 {
-  "name": "Artol Hellas",
-  "number": "900-888-8900"
+  "name": "Arto Vihavainen",
+  "number": "100-888-8900"
+}
+
+###
+PUT http://localhost:3001/api/persons/690be4b19425ac308a1692e0
+Content-Type: application/json
+
+{
+  "name": "Drogba Didier",
+  "number": "000-888-8900"
 }
