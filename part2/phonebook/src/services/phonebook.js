@@ -2,7 +2,19 @@ import axios from "axios";
 const baseUrl = "/api/persons";
 
 const createPhonebook = (phonebook) => {
-  return axios.post(baseUrl, phonebook).then((response) => response.data);
+  return axios
+    .post(baseUrl, phonebook)
+    .then((response) => {
+      console.log(response);
+      console.log("response status", response.status);
+      return { status: response.status, data: response.data };
+    })
+    .catch((error) => {
+      return {
+        status: error.response.status,
+        message: error.response.data.error,
+      };
+    });
 };
 const getPhonebooks = () => {
   return axios.get(baseUrl).then((response) => response.data);

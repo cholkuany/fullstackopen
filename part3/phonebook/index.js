@@ -17,9 +17,11 @@ app.use(
 );
 
 app.get("/api/persons", (request, response) => {
-  Person.find({}).then((phonebooks) => {
-    response.json(phonebooks);
-  });
+  Person.find({})
+    .then((phonebooks) => {
+      response.json(phonebooks);
+    })
+    .catch((error) => console.log(error));
 });
 
 app.get("/api/persons/:id", (request, response, next) => {
@@ -50,26 +52,28 @@ app.delete("/api/persons/:id", (request, response, next) => {
     .catch((error) => next(error));
 });
 
-app.post("/api/persons", (request, response) => {
+app.post("/api/persons", (request, response, next) => {
   const { name, number } = request.body;
 
   if (!name || !number) {
     return response.status(400).json({ error: "name or number is missing" });
   }
 
-  Person.findOne({ name }).then((person) => {
-    console.log(`person from DB::: ${person}`);
-    if (person) {
-      return response.status(409).json({ error: "name must be unique" });
-    }
-    const newPerson = new Person({
-      name,
-      number,
-    });
-    newPerson.save().then((savedPerson) => {
-      response.json(savedPerson);
-    });
-  });
+  Person.findOne({ name })
+    .then((person) => {
+      if (person) {
+        return response.status(409).json({ error: "name must be unique" });
+      }
+
+      const newPerson = new Person({ name, number });
+      newPerson
+        .save()
+        .then((savedPerson) => {
+          response.json(savedPerson);
+        })
+        .catch((error) => next(error));
+    })
+    .catch((error) => next(error));
 });
 
 app.put("/api/persons/:id", (request, response, next) => {
@@ -111,6 +115,8 @@ app.get("/info", (request, response) => {
 const errorHandler = (error, request, response, next) => {
   if (error.name === "CastError") {
     return response.status(400).send({ error: "malformatted id" });
+  } else if (error.name === "ValidationError") {
+    return response.status(400).json({ error: error.message });
   }
   next(error);
 };

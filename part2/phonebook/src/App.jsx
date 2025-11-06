@@ -102,10 +102,14 @@ const App = () => {
     }
     const personObject = { name: newName, number: newNumber };
     phonebookService.createPhonebook(personObject).then((returnedPerson) => {
-      setPersons(persons.concat(returnedPerson));
-      notify(`Added ${returnedPerson.name}`, "success");
-      setNewName("");
-      setNewNumber("");
+      if (returnedPerson.status === 200) {
+        setPersons(persons.concat(returnedPerson.data));
+        notify(`Added ${returnedPerson.data.name}`, "success");
+        setNewName("");
+        setNewNumber("");
+      } else {
+        notify(returnedPerson.message, "error");
+      }
     });
   };
 
