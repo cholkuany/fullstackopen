@@ -48,9 +48,12 @@ const App = () => {
   const [persons, setPersons] = useState([]);
 
   useEffect(() => {
-    phonebookService.getPhonebooks().then((initialPersons) => {
-      setPersons(initialPersons);
-    });
+    phonebookService
+      .getPhonebooks()
+      .then((initialPersons) => {
+        setPersons(initialPersons);
+      })
+      .catch((error) => console.log(error));
   }, []);
 
   const [newName, setNewName] = useState("");

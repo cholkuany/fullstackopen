@@ -5,8 +5,6 @@ const createPhonebook = (phonebook) => {
   return axios
     .post(baseUrl, phonebook)
     .then((response) => {
-      console.log(response);
-      console.log("response status", response.status);
       return { status: response.status, data: response.data };
     })
     .catch((error) => {

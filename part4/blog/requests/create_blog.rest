@@ -1,0 +1,9 @@
+POST http://localhost:3001/api/blogs HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "AI can improve employee experience - and it's not what you think",
+  "author": "Dr. Nadya Zhexembayeva",
+  "url": "https://www.kyndryl.com/ca/en/institute/employee-experience",
+  "likes": "9"
+}
