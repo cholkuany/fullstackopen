@@ -81,6 +81,26 @@ describe('blog api test', () => {
 
       await api.post('/api/blogs').send(newBlog).expect(400)
   })
+
+  test('delete a blog', async() => {
+    const blogs = await helper.blogsInDB()
+    const blogToDelete = blogs[0].id
+    
+    await api.delete(`/api/blogs/${blogToDelete}`).expect(204)
+  })
+
+  test('increment like', async() => {
+    const blogs = await helper.blogsInDB()
+    const {likes, id} = blogs[0]
+
+    const blog = await api
+      .put(`/api/blogs/${id}`)
+      .send({likes: likes + 1})
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+      
+    assert.strictEqual(likes + 1, blog.body.likes)
+  })
 })
 
 after(async() => {
