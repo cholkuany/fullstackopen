@@ -20,6 +20,14 @@ const favoriteBlog = (blogs) => {
     return favorite
 }
 
+const mostLikes = (blogs) => {
+  const numBlogsPerAuthor = []
+}
+
+const mostBlogs = (blogs) => {
+
+}
+
 module.exports = {
   dummy,
   totalLikes,
