@@ -13,13 +13,11 @@ const Blog = ({ blog }) => {
   }
   const onLike = async() => {
     blog = {...blog, likes: blog.likes + 1}
-    const newBlog = await update(blog)
-    console.log(newBlog)
+    await update(blog)
   }
   const onDelete = async() => {
     if(window.confirm(`Remove ${blog.title} by ${blog.author}`)){
       const deletedBlog = await deleteBlog(blog.id)
-      console.log("DELETED BLOG", deletedBlog)
     }
   }
   return (
@@ -37,7 +35,7 @@ const Blog = ({ blog }) => {
             <div>{blog.url}</div>
             <div>
               likes {blog.likes}
-              <button onClick={onLike}>like</button>
+              <button onClick={onLike} id="likeButton">like</button>
             </div>
             {blog.user && <div>{blog.user.name}</div>}
             {
