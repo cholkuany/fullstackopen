@@ -1,0 +1,16 @@
+{
+  "name": "bloglist_e2e_testing",
+  "version": "1.0.0",
+  "description": "Playwright end to end testing (bloglist)",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:report": "playwright show-report"
+  },
+  "author": "Chol Kuany",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^24.10.1"
+  }
+}
