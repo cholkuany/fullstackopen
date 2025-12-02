@@ -2,7 +2,7 @@ import { useState } from "react"
 import update from "../services/update"
 import deleteBlog from "../services/delete"
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, setBlogs }) => {
   const [show, setShow] = useState(false)
   let isOwner = null
   const loggedInUser = JSON.parse(window.localStorage.getItem("loggedInUser"))
@@ -12,12 +12,17 @@ const Blog = ({ blog }) => {
     }
   }
   const onLike = async() => {
-    blog = {...blog, likes: blog.likes + 1}
-    await update(blog)
+    const blogLiked = await update({...blog, likes: blog.likes + 1})
+    if(blogLiked){
+      setBlogs(blogs => blogs.map(b => b.id === blogLiked.id ? blogLiked : b).sort((a,b) => b.likes - a.likes))
+    }
   }
   const onDelete = async() => {
     if(window.confirm(`Remove ${blog.title} by ${blog.author}`)){
-      const deletedBlog = await deleteBlog(blog.id)
+      const status = await deleteBlog(blog.id)
+      if(status === 204){
+        setBlogs(blogs => blogs.filter(b => b.id !== blog.id).sort((a,b) => b.likes - a.likes))
+      }
     }
   }
   return (

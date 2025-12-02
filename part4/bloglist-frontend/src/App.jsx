@@ -19,8 +19,7 @@ const App = () => {
     blogService.getAll().then(blogs => {
       blogs.sort((a,b) => b.likes - a.likes)
       setBlogs( blogs )
-    }
-    )  
+    })
   }, [])
 
   useEffect(() => {
@@ -53,6 +52,9 @@ const App = () => {
     try {
       const blog = await createService.create({title, author, url})
       setMessage(`${blog.title} by ${blog.author} added`)
+      console.log("CREATED BLOG", blog)
+      // blog.user = { username: user.username, name: user.name }
+      setBlogs(blogs.concat(blog))
       setTimeout(() => {
         setMessage(null)
       },5000)
@@ -128,7 +130,7 @@ const App = () => {
             <div>{blogForm()}</div>
           </div>
           {blogs.map(blog =>
-            <Blog key={blog.id} blog={blog} />
+            <Blog key={blog.id} blog={blog} setBlogs={setBlogs}/>
           )}
         </>
       }

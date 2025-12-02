@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from 'axios'
 const baseUrl = '/api/blogs'
 
 let token = null
@@ -11,9 +11,9 @@ const create = async (blogData) => {
       Authorization: token
     }
   }
-  
+
   const blog = await axios.post(baseUrl, blogData, config)
-  console.log("New blog", blog)
+  console.log('New blog (create)', blog.data)
   return blog.data
 
 }

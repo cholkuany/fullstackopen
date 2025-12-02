@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from 'axios'
 const baseUrl = '/api/blogs'
 
 const deleteBlog = async (blogId) => {
@@ -9,8 +9,7 @@ const deleteBlog = async (blogId) => {
     }
   }
   const blog = await axios.delete(`${baseUrl}/${blogId}`, config)
-  return blog.data
-
+  return blog.status
 }
 
 export default deleteBlog
