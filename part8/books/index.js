@@ -1,5 +1,6 @@
 const { ApolloServer } = require("@apollo/server");
 const { startStandaloneServer } = require("@apollo/server/standalone");
+const { GraphQLError } = require("graphql");
 
 const crypto = require("crypto");
 
@@ -81,10 +82,6 @@ let books = [
   },
 ];
 
-/*
-  you can remove the placeholder query once your first one has been implemented 
-*/
-
 const typeDefs = /* GraphQL */ `
   type Book {
     title: String!
@@ -147,9 +144,10 @@ const resolvers = {
   Mutation: {
     addBook: (root, args) => {
       const book = { ...args, id: crypto.randomUUID() };
-      books.concat(book);
+      books = books.concat(book);
       return book;
     },
+
     editAuthor: (root, args) => {
       let editedAuthor = null;
       authors = authors.map((a) => {
