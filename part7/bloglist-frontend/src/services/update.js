@@ -8,7 +8,6 @@ const update = async (blogData) => {
       Authorization: `Bearer ${localUser.token}`,
     },
   };
-
   const blog = await axios.put(
     `${baseUrl}/${blogData.id}`,
     { likes: blogData.likes },

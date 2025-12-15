@@ -25,8 +25,11 @@ const Person = ({ authors }) => {
         <div>
           <label>
             name{" "}
-            <select value={name} onChange={(e) => setName(e.target.value)}>
-              <option value="" disabled selected>
+            <select
+              defaultValue={name}
+              onChange={(e) => setName(e.target.value)}
+            >
+              <option value="" disabled>
                 Select a name
               </option>
               {authors.map((a) => {

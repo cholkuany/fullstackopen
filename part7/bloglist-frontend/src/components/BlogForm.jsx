@@ -1,14 +1,14 @@
 import { useState } from "react";
 
-const BlogForm = ({ createBlog }) => {
+const BlogForm = ({ handleSubmit }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
 
-  const handleSubmit = async (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    const success = await createBlog({ title, author, url });
-    if (success) {
+    const ok = await handleSubmit({ title, author, url });
+    if (ok) {
       setAuthor("");
       setTitle("");
       setUrl("");
@@ -17,7 +17,7 @@ const BlogForm = ({ createBlog }) => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={onSubmit}>
         <div>
           <label>
             title:

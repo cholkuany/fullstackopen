@@ -2,14 +2,9 @@ const { ApolloServer } = require("@apollo/server");
 const { startStandaloneServer } = require("@apollo/server/standalone");
 const { GraphQLError } = require("graphql");
 
-const { v1: uuid } = require("uuid");
-
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-/**
- * token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlJvYmVydCBNYXJ0aW4iLCJpZCI6IjY5M2RiNjMwMTZmZDFhOWU3NWYzOWQzYyIsImlhdCI6MTc2NTY1MjE5N30.i8yeAUpTreiIZt-H7wWWqY0ZBg7me9fVpaJoHW5FoXs"
- * username: "Robert Martin"
- */
+
 mongoose.set("strictQuery", false);
 const Person = require("./models/person");
 const User = require("./models/user");
