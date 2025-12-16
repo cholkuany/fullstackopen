@@ -1,4 +1,7 @@
 const typeDefs = `
+  type Subscription {
+    personAdded: Person!
+  }    
   type User {
     username: String!
     friends: [Person!]!
