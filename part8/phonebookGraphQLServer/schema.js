@@ -1,14 +1,11 @@
-const typeDefs = `
-  type Subscription {
-    personAdded: Person!
-  }    
+const typeDefs = `#graphql
   type User {
     username: String!
     friends: [Person!]!
     id: ID!
   }
 
-  type Token {
+type Token {
     value: String!
   }
 
@@ -21,9 +18,9 @@ const typeDefs = `
     name: String!
     phone: String
     address: Address!
+    friendOf: [User!]!
     id: ID!
   }
-
   enum YesNo {
     YES
     NO
@@ -48,5 +45,9 @@ const typeDefs = `
     login(username: String!, password: String!): Token
     addAsFriend(name: String!): User
   }
+
+  type Subscription {
+    personAdded: Person!
+  }  
 `;
 module.exports = typeDefs;

@@ -21,7 +21,9 @@ const User = require("./models/user");
 const typeDefs = require("./schema");
 const resolvers = require("./resolvers");
 
-const MONGODB_URI = "mongodb+srv://databaseurlhere";
+require("dotenv").config();
+
+const MONGODB_URI = process.env.MONGODB_URI;
 
 console.log("connecting to", MONGODB_URI);
 
@@ -33,6 +35,7 @@ mongoose
   .catch((error) => {
     console.log("error connection to MongoDB:", error.message);
   });
+mongoose.set("debug", true);
 
 // setup is now within a function
 const start = async () => {
@@ -84,6 +87,7 @@ const start = async () => {
           );
           return { currentUser };
         }
+        return {};
       },
     })
   );

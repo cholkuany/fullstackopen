@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
   useQuery,
-  useMutation,
   useSubscription,
   useApolloClient,
 } from "@apollo/client/react";
