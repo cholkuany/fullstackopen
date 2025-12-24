@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useApolloClient, useQuery } from "@apollo/client/react";
+import { useApolloClient, useQuery, useSubscription } from "@apollo/client/react";
 
 import Authors from "./components/Authors";
 import Books from "./components/Books";
@@ -7,14 +7,27 @@ import NewBook from "./components/NewBook";
 import LoginForm from "./components/LoginForm";
 import Recommendation from "./components/Recommendation";
 
-import { ME } from "./queries";
+import { ME, BOOK_ADDED, ALL_BOOKS } from "./queries";
 
 const App = () => {
   const [page, setPage] = useState("authors");
   const [token, setToken] = useState(null);
+  const [message, setMessage] = useState(null);
 
   const result = useQuery(ME);
   const client = useApolloClient();
+
+  useSubscription(BOOK_ADDED, {
+    onData: ({ client, data }) => {
+      const addedBook = data.data.bookAdded;
+      client.cache.updateQuery({ query: ALL_BOOKS }, ({ allBooks }) => {
+        return {
+          allBooks: allBooks.concat(addedBook),
+        };
+      });
+      notify(`Added ${addedBook.title}`);
+    },
+  });
 
   useEffect(() => {
     const localToken = localStorage.getItem("currentUser-token");
@@ -37,6 +50,13 @@ const App = () => {
     client.resetStore();
   };
 
+  const notify = (message) => {
+    setMessage(message);
+    setTimeout(() => {
+      setMessage(null);
+    }, 5000);
+  }
+
   return (
     <div>
       <div>
@@ -53,7 +73,9 @@ const App = () => {
         )}
       </div>
 
-      <Authors show={page === "authors"} />
+      {message && <div style={{ marginTop: "5px", marginBottom: "5px", color: "white", background: "green", padding: "10px" }}>{message}</div>}
+
+      <Authors show={page === "authors"} token={token} notify={notify} />
       <Books show={page === "books"} />
       {token && <NewBook show={page === "add"} />}
       {page === "recommend" && token && <Recommendation genre={genre} />}

@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "@apollo/client/react";
 
 import { ALL_AUTHORS, EDIT_AUTHOR } from "../queries";
 
-const Person = ({ authors }) => {
+const Person = ({ authors, notify }) => {
   const [name, setName] = useState("");
   const [born, setBorn] = useState("");
 
@@ -16,6 +16,7 @@ const Person = ({ authors }) => {
     editBorn({ variables: { name, born } });
     setName("");
     setBorn("");
+    notify(`Updated birth year for ${name} to ${born}`);
   };
 
   return (
@@ -85,7 +86,7 @@ const Authors = (props) => {
           ))}
         </tbody>
       </table>
-      <Person authors={authors} />
+      {props.token && <Person authors={authors} notify={props.notify} />}
     </div>
   );
 };
